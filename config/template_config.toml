@@ -105,9 +105,9 @@ phone_required = true
 # BTCPay payment settings
 [Payments.BTCPay]
 # User API key on server store | get it from your Account -> Manage Account -> API Keys
-token = "883d4d2c24cf6454c1872a70e8d232094ccb97b0"
+token = "123456789:YOUR_TOKEN_HERE_"
 # related storeId get it from btcpayserver store Dashboard
-storeId = 'FfmUqpe7miFwpTf4hmk4VUBWN9QHXCZA8hYytgj322iY'
+storeId = '123456789:YOUR_STORE_ID_HERE_'
 # Minimum wallet payment accepted (in miniumum currency units, $1.00 = 100 units)
 min_amount = 1
 # Maximum wallet payment accepted (in miniumum currency units, $1.00 = 100 units)
