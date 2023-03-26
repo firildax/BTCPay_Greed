@@ -38,11 +38,11 @@ class successfulPaymentBTC(threading.Thread):
         self.mail = None
         self.phone_number = None
 
-    def run(self, invoiceId,token,store):
+    def run(self, url, invoiceId,token,store):
         """Continue getting updates until a successfulpayment is received."""
         log.debug("Waiting for a BTCPay SuccessfulPayment...")
-        uri = "https://btcpayserver.heromining.org/api/v1/stores/{}/invoices/{}".format(
-            store, invoiceId)
+        uri = "https://{}/api/v1/stores/{}/invoices/{}".format(
+            url,store, invoiceId)
         headers = {'Authorization': 'token %s' % token,
                    'Content-Type': 'application/json'}
         self.has_invoice = True
@@ -418,7 +418,7 @@ class Worker(threading.Thread):
     def __wait_for_successfulpayment_btcpay(self, invoiceId,cancellable: bool = False) -> Union[telegram.SuccessfulPayment, CancelSignal]:
         """Continue getting updates until a successfulpayment is received."""
         log.debug("Waiting for a BTCPay SuccessfulPayment...")
-        uri = "https://btcpayserver.heromining.org/api/v1/stores/{}/invoices/{}".format(self.cfg['Payments']['BTCPay']['storeId'],invoiceId)
+        uri = "https://{}/api/v1/stores/{}/invoices/{}".format(self.cfg['Payments']['BTCPay']['url'],self.cfg['Payments']['BTCPay']['storeId'],invoiceId)
         headers = {'Authorization': 'token %s' % self.cfg["Payments"]["BTCPay"]["token"],
                    'Content-Type': 'application/json'}
         while True:
@@ -610,12 +610,13 @@ class Worker(threading.Thread):
                                               caption=product.text(w=self),
                                               reply_markup=inline_keyboard)
         # Create the keyboard with the cancel button
-        inline_keyboard = telegram.InlineKeyboardButton([[telegram.InlineKeyboardButton(self.loc.get("menu_cancel"),
+        inline_keyboard = telegram.InlineKeyboardMarkup([[telegram.InlineKeyboardButton(self.loc.get("menu_cancel"),
                                                                                         callback_data="cart_cancel")]])
         # Send a message containing the button to cancel or pay
         final_msg = self.bot.send_message(self.chat.id,
                                           self.loc.get("conversation_cart_actions"),
                                           reply_markup=inline_keyboard)
+        
         # Wait for user input
         while True:
             callback = self.__wait_for_inlinekeyboard_callback()
@@ -1020,7 +1021,7 @@ class Worker(threading.Thread):
         pricess = str(amount).split('.')
         price = str(pricess[0]).split(' ')
 
-        uri = 'https://btcpayserver.heromining.org/api/v1/stores/%s/invoices' % self.cfg['Payments']['BTCPay']['storeId']
+        uri = "https://{}/api/v1/stores/{}/invoices".format(self.cfg['Payments']['BTCPay']['url'], self.cfg['Payments']['BTCPay']['storeId'])
         headers = {'Authorization': 'token %s' % self.cfg["Payments"]["BTCPay"]["token"], 'Content-Type': 'application/json'}
         data = json.dumps({'amount': "{}".format(int(price[1])) })
 
@@ -1037,7 +1038,7 @@ class Worker(threading.Thread):
         # successfulpayment.start()
 
         x = successfulPaymentBTC()
-        x.run(invoiceId,self.cfg["Payments"]["BTCPay"]["token"],self.cfg['Payments']['BTCPay']['storeId'])
+        x.run(self.cfg["Payments"]["BTCPay"]["url"],invoiceId,self.cfg["Payments"]["BTCPay"]["token"],self.cfg['Payments']['BTCPay']['storeId'])
 
         if x.status == 'Settled':
             # Create a new database transaction

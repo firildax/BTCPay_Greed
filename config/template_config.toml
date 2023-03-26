@@ -60,7 +60,7 @@ currency_symbol = "€"
 # Cash payment settings
 [Payments.Cash]
 # Display the "With cash" option in the Add Credit menu
-enable_pay_with_cash = true
+enable_pay_with_cash = false
 # Display the "Create transaction" option in the Manager menu
 enable_create_transaction = true
 # Customize the cash payment text in the strings files!
@@ -104,10 +104,12 @@ phone_required = true
 
 # BTCPay payment settings
 [Payments.BTCPay]
+# your or shared btcpayserver url to calling Apis
+url = 'btcpayserver.example.com'
 # User API key on server store | get it from your Account -> Manage Account -> API Keys
-token = "123456789:YOUR_TOKEN_HERE_"
+token = "YOUR_TOKEN_HERE_"
 # related storeId get it from btcpayserver store Dashboard
-storeId = '123456789:YOUR_STORE_ID_HERE_'
+storeId = 'YOUR_STORE_ID_HERE_'
 # Minimum wallet payment accepted (in miniumum currency units, $1.00 = 100 units)
 min_amount = 1
 # Maximum wallet payment accepted (in miniumum currency units, $1.00 = 100 units)

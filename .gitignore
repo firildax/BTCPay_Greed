@@ -104,5 +104,6 @@ ENV/
 config/config.ini
 config/config.toml
 *.sqlite
+*.sqlite.old
 *.sqlite-journal
 data/
