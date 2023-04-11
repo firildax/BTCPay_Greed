@@ -1038,7 +1038,7 @@ class Worker(threading.Thread):
         # successfulpayment.start()
 
         x = successfulPaymentBTC()
-        x.run(self.cfg["Payments"]["BTCPay"]["url"],invoiceId,self.cfg["Payments"]["BTCPay"]["token"],self.cfg['Payments']['BTCPay']['storeId'])
+        x.run(self.cfg['Payments']['BTCPay']['url'],invoiceId,self.cfg['Payments']['BTCPay']['token'],self.cfg['Payments']['BTCPay']['storeId'])
 
         if x.status == 'Settled':
             # Create a new database transaction
