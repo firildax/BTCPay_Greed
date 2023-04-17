@@ -38,6 +38,9 @@ cp template_config.toml config.toml
     * line 74 : to disabling credit cart payment put "" (credit_card_token = "")
     * line 108 : btcpaysever url (url = 'btcpayserver.example.com')
     * line 110 : btcpayserver user token (token = "55323428082308423hhd08s0d8s8s0d8gs0d8gs08df0s8d0sd0602")
+        ## needs these two permission on btcpayserver:
+            * btcpay.store.canviewinvoices
+            * btcpay.store.cancreateinvoice
     * line 112 : btcpayserver storeId (storeId = 'FMXa7ateurSASFAFaoasad90sdgoaugsoagubo1832830808380235')
 
     and save it.
